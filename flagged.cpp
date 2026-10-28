@@ -52,7 +52,7 @@ public:
     }
 };
 int main(){
-    consumerAccount c(5000,false,"Anshul");
+    consumerAccount c(5000,true,"Anshul");
     BaseAccount *a=&c;
     a->display();
     a->sendMoney(1000);
