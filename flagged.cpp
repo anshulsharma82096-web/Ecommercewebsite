@@ -9,14 +9,14 @@ public:
     BaseAccount(double b,bool f,string n): balance(b),flag(f),Name(n){
         cout<<"Base Constructor is called"<<endl;
     }
-    virtual void sendMoney(double amount){
+    void sendMoney(double amount){
         if(flag){
             cout<<"flagged Account,Money send denied"<<endl;
         }
         else if(balance<amount){
             cout<<"Insufficient balance"<<endl;
         }
-        else if(balance>amount){
+        else if(balance>=amount){
             balance-=amount;
         }
         else{
@@ -42,7 +42,7 @@ public:
         cout<<"consumer send money"<<endl;
         BaseAccount::receiveMoney(amount);   
     }
-    void sendMoney(double amount) override{
+    void sendMoney(double amount) {
         cout<<"Consumer receive money"<<endl;
         BaseAccount::sendMoney(amount);
     }
@@ -52,12 +52,19 @@ public:
     }
 };
 int main(){
-    consumerAccount c(5000,true,"Anshul");
+    bool flag=false;
+    consumerAccount c(5000,flag,"Anshul");
     BaseAccount *a=&c;
-    a->display();
-    a->sendMoney(1000);
-    a->receiveMoney(2000);
-    a->display();
-
+    if(flag){
+        a->display();
+        a->sendMoney(1000);
+        a->receiveMoney(2000);
+        a->display();
+    }
+    else{
+        consumerAccount* d = dynamic_cast<consumerAccount*>(a);
+        d->sendMoney(1000);
+        d->display();
+    }
 
 }
